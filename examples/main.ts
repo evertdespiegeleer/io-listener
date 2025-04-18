@@ -1,4 +1,4 @@
-import { KeyboardListener } from "npm:io-listener";
+import { KeyboardListener } from "../src/main.ts";
 
 const listener = new KeyboardListener()
 await listener.listen()

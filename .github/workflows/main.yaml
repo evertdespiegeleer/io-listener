@@ -3,7 +3,7 @@ name: Build (and publish)
 on:
   push:
   release:
-    types: [created, published]
+    types: [created]
 
 jobs:
   build-python:
