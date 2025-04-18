@@ -35,7 +35,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.output_name }}
+          name: python-${{ matrix.output_name }}
           path: python/dist/${{ matrix.output_name }}
 
   build-node:
@@ -52,6 +52,13 @@ jobs:
         with:
           pattern: python-*
           path: python/dist
+          merge-multiple: true
+      # Remove python- prefixes
+      - name: Rename Artifacts
+        run: |
+          for file in python/dist/python-*; do
+            mv "$file" "${file/python-/}"
+          done
       - run: npm run build
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
