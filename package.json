@@ -1,12 +1,11 @@
 {
   "name": "io-listener",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "module",
   "author": {
     "name": "Evert De Spiegeleer",
     "url": "https://evertdespiegeleer.com"
   },
-  "private": true,
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
   "files": [
