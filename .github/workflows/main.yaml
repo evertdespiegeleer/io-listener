@@ -80,7 +80,7 @@ jobs:
           path: dist
           merge-multiple: true
       - name: Make binaries executable
-        run: chmod +x python/dist/*
+        run: chmod +x dist/python/*
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
