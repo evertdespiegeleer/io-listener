@@ -3,12 +3,15 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { existsSync } from 'node:fs'
 import { readdir } from 'node:fs/promises';
-import { platform } from 'node:os';
+import { platform as getPlatform } from 'node:os';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const supportedPlatforms = ['win32', 'darwin', 'linux'] satisfies NodeJS.Platform[]
+
 export const createPythonProcess = () => new Promise<ChildProcessWithoutNullStreams>(async (resolve, reject) => {
+    //#region Find the executable
     let process: ChildProcessWithoutNullStreams;
 
     const searchExecutablesInDir = async (directoryPath: string) => {
@@ -25,11 +28,18 @@ export const createPythonProcess = () => new Promise<ChildProcessWithoutNullStre
         ...await searchExecutablesInDir(path.join(__dirname, '../python/dist')),
     ]
 
-    const pythonExecutablePath = executables.find(path => path.includes(platform()));
+    const platform = getPlatform();
+
+    if (!(supportedPlatforms as string[]).includes(platform)) {
+        throw new Error(`Unsupported platform: ${platform}. Supported platforms are: ${supportedPlatforms.join(', ')}`);
+    }
+
+    const pythonExecutablePath = executables.find(path => path.includes(platform));
     
     if (pythonExecutablePath == null) {
         throw new Error('Python executable not found. Please build the Python project first.');
     }
+    //#endregion
     
     process = spawn(pythonExecutablePath, [], { shell: true });
 
