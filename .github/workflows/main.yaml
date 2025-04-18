@@ -26,11 +26,6 @@ jobs:
           requirements: 'python/src/requirements.txt'
           exe_path: 'python/src/dist'
           options: --onefile, --name "${{ matrix.output_name }}"
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix.output_name }}
-          path: python/dist/${{ matrix.output_name }}
 
   build-node:
     runs-on: ubuntu-latest
