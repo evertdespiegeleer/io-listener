@@ -1,11 +1,16 @@
 {
   "name": "io-listener",
-  "version": "0.0.12",
+  "version": "0.1.0",
   "type": "module",
   "author": {
     "name": "Evert De Spiegeleer",
     "url": "https://evertdespiegeleer.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evertdespiegeleer/io-listener.git"
+  },
+  "description": "A simple library to globally listen to keyboard events",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
   "files": [
