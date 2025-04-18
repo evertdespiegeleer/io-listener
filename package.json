@@ -1,6 +1,6 @@
 {
   "name": "io-listener",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "type": "module",
   "author": {
     "name": "Evert De Spiegeleer",
@@ -15,8 +15,7 @@
   "scripts": {
     "local-build-python": "./scripts/local-build-python.sh",
     "build": "mkdir -p ./dist/python && cp -p ./python/dist/* ./dist/python && tsc",
-    "dev": "node --experimental-transform-types --watch --inspect=0.0.0.0:12002 examples/main.ts",
-    "postinstall": "chmod +x ./dist/python/* || true"
+    "dev": "node --experimental-transform-types --watch --inspect=0.0.0.0:12002 examples/main.ts"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",
