@@ -10,8 +10,9 @@
     "readme.md"
   ],
   "scripts": {
-    "build": "./scripts/build-python.sh && tsc",
-    "dev": "node --experimental-transform-types --watch --inspect=0.0.0.0:12002 src/main.ts"
+    "local-build-python": "./scripts/local-build-python.sh",
+    "build": "mkdir -p ./dist/python && cp ./python/dist/* ./dist/python && tsc",
+    "dev": "node --experimental-transform-types --watch --inspect=0.0.0.0:12002 examples/main.ts"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",

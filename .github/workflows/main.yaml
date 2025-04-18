@@ -1,0 +1,48 @@
+name: Main
+
+on:
+  push
+
+jobs:
+  build-python:
+    name: Build Python (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            output_name: "linux"
+          - os: windows-latest
+            output_name: "win.exe"
+          - os: macos-latest
+            output_name: "darwin"
+    steps:
+      - uses: sayyid5416/pyinstaller@v1
+        with:
+          python_ver: '3.6'
+          spec: 'python/src/main.py'
+          requirements: 'python/src/requirements.txt'
+          exe_path: 'python/src/dist'
+          options: --onefile, --name "${{ matrix.output_name }}"
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.output_name }}
+          path: python/dist/${{ matrix.output_name }}
+
+  build-node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm run build
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: node
+          path: dist

@@ -2,19 +2,30 @@ import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { existsSync } from 'node:fs'
+import { readdir } from 'node:fs/promises';
+import { platform } from 'node:os';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export const createPythonProcess = () => new Promise<ChildProcessWithoutNullStreams>((resolve, reject) => {
+export const createPythonProcess = () => new Promise<ChildProcessWithoutNullStreams>(async (resolve, reject) => {
     let process: ChildProcessWithoutNullStreams;
 
-    const possiblePythonExecutablePaths = [
-        path.join(__dirname, 'python/main'),
-        path.join(__dirname, '../python/dist/main'),
+    const searchExecutablesInDir = async (directoryPath: string) => {
+        const dirExists = existsSync(directoryPath)
+        if (!dirExists) {
+            return []
+        }
+        const files = await readdir(directoryPath)
+        return files.map(file => path.join(directoryPath, file))
+    }
+
+    const executables = [
+        ...await searchExecutablesInDir(path.join(__dirname, 'python')),
+        ...await searchExecutablesInDir(path.join(__dirname, '../python/dist')),
     ]
-    
-    const pythonExecutablePath = possiblePythonExecutablePaths.find(path => existsSync(path));
+
+    const pythonExecutablePath = executables.find(path => path.includes(platform()));
     
     if (pythonExecutablePath == null) {
         throw new Error('Python executable not found. Please build the Python project first.');
