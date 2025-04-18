@@ -21,7 +21,6 @@ jobs:
     steps:
       - uses: sayyid5416/pyinstaller@v1
         with:
-          python_ver: '3.6'
           spec: 'python/src/main.py'
           requirements: 'python/src/requirements.txt'
           exe_path: 'python/src/dist'
