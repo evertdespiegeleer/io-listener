@@ -1,0 +1,31 @@
+// Based on https://www.totaltypescript.com/tsconfig-cheat-sheet and https://2ality.com/2025/01/nodejs-strip-type.html#tsconfig.json
+{
+    "$schema": "https://json.schemastore.org/tsconfig.json",
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "allowJs": true,
+        "resolveJsonModule": true,
+        "moduleDetection": "force",
+        "isolatedModules": true,
+        "verbatimModuleSyntax": true,
+        "strict": true,
+        "noUncheckedIndexedAccess": true,
+        "noImplicitOverride": true,
+        "outDir": "${configDir}/dist",
+        "rootDir": "${configDir}/src",
+        "sourceMap": true,
+        "lib": [
+            "es2022"
+        ],
+        "target": "esnext",
+        "module": "nodenext",
+        "allowImportingTsExtensions": true,
+        "rewriteRelativeImportExtensions": true,
+        "erasableSyntaxOnly": true
+    },
+    "include": [
+        "${configDir}/**/*.config.*",
+        "${configDir}/src/**/*"
+    ]
+}
