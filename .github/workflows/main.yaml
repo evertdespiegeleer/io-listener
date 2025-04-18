@@ -79,6 +79,8 @@ jobs:
           pattern: 'node'
           path: dist
           merge-multiple: true
+      - name: Make binaries executable
+        run: chmod +x python/dist/*
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
